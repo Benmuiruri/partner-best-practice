@@ -49,7 +49,6 @@ clearCompleted.addEventListener('click', () => {
 
 const populateTasks = (arr) => {
   currentTasks.innerHTML = '';
-
   arr.forEach((element, i) => {
     const newDiv = document.createElement('div');
     const tick = document.createElement('input');
