@@ -49,25 +49,25 @@ clearCompleted.addEventListener('click', () => {
 
 const populateTasks = (arr) => {
   currentTasks.innerHTML = '';
-  for (let i = 0; i <= arr.length; i += 1) {
-    // Add an item to local storage
+
+  arr.forEach((element, i) => {
     const newDiv = document.createElement('div');
-    newDiv.className = 'to-do-item';
     const tick = document.createElement('input');
     const description = document.createElement('input');
-    description.className = 'task-description';
     const menuImg = document.createElement('img');
+    newDiv.className = 'to-do-item';
+    description.className = 'task-description';
     menuImg.src = `${ViewMore}`;
     tick.setAttribute('type', 'checkbox');
     tick.id = i;
     newDiv.id = `item${i}`;
     newDiv.append(tick);
-    description.value = `${arr[i].description}`;
+    description.value = `${element.description}`;
     newDiv.append(description);
     newDiv.append(menuImg);
     currentTasks.appendChild(newDiv);
     // Check which checkboxes are clicked.
-    if (arr[i].completed === 'true') {
+    if (element.completed === 'true') {
       tick.checked = true;
       newDiv.style.textDecoration = 'line-through';
     }
@@ -75,7 +75,7 @@ const populateTasks = (arr) => {
     // Double click the input area to display the delete icon
     description.addEventListener('dblclick', () => {
       newDiv.classList.add('edit-mode');
-      newDiv.innerHTML = `<input type="checkbox" id="${i}"></input><input id = "update${i}" class="update" type="text" value = "${arr[i].description}"></input><i id="delete${i}" class="fas fa-trash-alt"></i>`;
+      newDiv.innerHTML = `<input type="checkbox" id="${i}"></input><input id = "update${i}" class="update" type="text" value = "${element.description}"></input><i id="delete${i}" class="fas fa-trash-alt"></i>`;
       document.getElementById(`update${i}`).focus();
       document.getElementById(`delete${i}`).addEventListener('click', () => {
         removeIndex(i);
@@ -91,7 +91,7 @@ const populateTasks = (arr) => {
         populateTasks(editTask(arr, i));
       }
     });
-  }
+  });
   setStorage(arr);
 };
 
